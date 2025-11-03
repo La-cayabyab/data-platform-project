@@ -59,7 +59,7 @@ locals {
     "roles/bigquery.admin" = [
     ]
     "roles/storage.objectViewer" = [
-      "g-ensign-indispensably@fivetran-production.iam.gserviceaccount.com"
+    "g-ensign-indispensably@fivetran-production.iam.gserviceaccount.com"
     ]
   }
 
