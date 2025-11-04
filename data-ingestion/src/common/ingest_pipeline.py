@@ -9,7 +9,7 @@ Workflow function to extract data from an API and load it into GCS.
 def extract_load(url, params, endpoint_name):
     os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = CREDENTIALS_PATH
     extractor = APIExtractor(url, params)
-    data = extractor.fetch()
+    data = extractor.extract()
     if data:
         uploader = GCSUploader(BUCKET_NAME, PROJECT_ID)
         upload_results = uploader.upload(data, endpoint_name)
@@ -18,4 +18,4 @@ def extract_load(url, params, endpoint_name):
         else:
             logging.error("Data ingestion failed during upload.")
     else:
-        logging.warning("No data fetched; skipping upload.")
+        logging.warning("No data extracted; skipping upload.")

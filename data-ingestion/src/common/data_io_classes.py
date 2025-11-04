@@ -4,7 +4,7 @@ from google.cloud import storage
 from datetime import datetime
 
 """
-Utility classes for data ingestion: APIExtractor and GCSUploader.
+Utility classes for data ingestion: APIExtractor (extracts data) and GCSUploader (uploads data).
 """
 class APIExtractor:
 
@@ -12,15 +12,15 @@ class APIExtractor:
         self.url = url
         self.params = params
 
-    def fetch(self):
-        """Fetch data from a specified API endpoint."""
+    def extract(self):
+        """extract data from a specified API endpoint."""
         try:
             response = requests.get(self.url, params=self.params)
             response.raise_for_status()
-            print(f"Successfully fetched data from {self.url}")
+            print(f"Successfully extracted data from {self.url}")
             return response.json()
         except requests.RequestException as e:
-            print(f"Failed to fetch data. Error Code: {e}")
+            print(f"Failed to extract data. Error Code: {e}")
             return None
 
 class GCSUploader:
