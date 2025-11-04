@@ -1,0 +1,7 @@
+id: run_data_ingestion
+namespace: demo
+tasks:
+  - id: run_main_py
+    type: io.kestra.core.tasks.scripts.Bash
+    commands:
+      - python3 /app/data-ingestion/endpoint_extractor/users_extractor.py
