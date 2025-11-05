@@ -3,8 +3,9 @@
 
 provider "registry.terraform.io/fivetran/fivetran" {
   version     = "1.9.11"
-  constraints = "1.9.11"
+  constraints = ">= 1.0.0"
   hashes = [
+    "h1:ElTLDoFqmDzOp02G1Msrb0qZ2q6dL7BqnZ6H2EMUp4g=",
     "h1:tbybyN4s4NzKtLXUfXC7Nbh1tiTphjiIBenqQ9HcFJA=",
     "zh:04e61a1f8ef1b8829c6fd74e0a136547d5142608bf1af09a29882deed30fb772",
     "zh:06919f585a17d15bd16550f168667810c13168003525277e8b073a99589d6f8a",
@@ -27,6 +28,7 @@ provider "registry.terraform.io/hashicorp/google" {
   constraints = "7.7.0"
   hashes = [
     "h1:XXIN2CJQVPeX2up/Fc0fxgvFvKPZ8n7EMYfHgUg19Qg=",
+    "h1:lKta7wJxmNonqiD10R8hFz1gtZNp+f1Nep+QoeVXAUw=",
     "zh:1bb1991d8518c1a48bbb0bc13c2f8a3ff4087f04f0290c088bd409c45372fac0",
     "zh:3e90926772a7336773d0746b369881723356f8f9bcdc61f0c5edf6cf877c528a",
     "zh:6024ab68e49b04ffc413fcb17d702775182f51277c55e05843ae2b954c430825",

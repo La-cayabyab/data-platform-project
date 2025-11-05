@@ -14,3 +14,12 @@ services:
       - ./.secrets/dataplatform-lab-internal-v1-tf-service-account.json:/app/secrets/dataplatform-lab-internal-v1-tf-service-account.json
     command: server local
     restart: unless-stopped
+
+  terraform:
+    image: hashicorp/terraform:latest
+    working_dir: /workspace/infrastructure
+    volumes:
+      - ./infrastructure:/workspace/infrastructure
+      - ${SECRET_PATH}:/workspace/.secret_keys:ro
+    entrypoint: /bin/sh
+    tty: true

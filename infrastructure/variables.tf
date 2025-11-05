@@ -1,14 +1,10 @@
-variable "svc-acct-auth-key" {
-  description = "auth key"
-  default     = "/Users/la.cayabyab/Downloads/dataplatform-lab-internal-v1-tf-service-account.json"
+variable "secret_path" {
+  description = "Path to secrets directory"
+  type        = string
 }
 
-variable "fivetran_api_key" {
-  description = "Fivetran API key for provisioning instance via Terraform"
-  default     = ""
-}
-
-variable "fivetran_api_secret" {
-  description = "Fivetran API secret for provisioning instance via Terraform"
-  default     = ""
+locals {
+  fivetran_api_key    = file("${var.secret_path}/fivetran_api_key.txt")
+  fivetran_api_secret = file("${var.secret_path}/fivetran_api_secret.txt")
+  tf_svc_acct_key     = file("${var.secret_path}/svc_acct_key.json")
 }

@@ -14,7 +14,7 @@ terraform {
 }
 
 provider "google" {
-  credentials = file(var.svc-acct-auth-key)
+  credentials = local.tf_svc_acct_key
   project     = "dataplatform-lab-internal-v1"
   region      = "us-east4"
 }
@@ -59,7 +59,7 @@ locals {
     "roles/bigquery.admin" = [
     ]
     "roles/storage.objectViewer" = [
-    "g-ensign-indispensably@fivetran-production.iam.gserviceaccount.com"
+      "g-ensign-indispensably@fivetran-production.iam.gserviceaccount.com"
     ]
   }
 
@@ -139,11 +139,9 @@ resource "google_bigquery_dataset" "sample_internal_db" {
   }
 }
 
-# fivetran
 provider "fivetran" {
-  #   We recommend to use environment variables instead of explicit assignment
-  api_key    = var.fivetran_api_key
-  api_secret = var.fivetran_api_secret
+  api_key    = local.fivetran_api_key
+  api_secret = local.fivetran_api_secret
 }
 
 resource "fivetran_destination" "bigquery_destination" {
@@ -170,8 +168,8 @@ resource "fivetran_connector" "google_cloud_storage" {
 
   config {
     bucket      = google_storage_bucket.test_gcp_bucket[0].name
-    folder_path = "/"    # Set to your base folder path, e.g. "data/"
-    file_type   = "json" # Set to your file type, e.g. "csv", "json", etc.
+    folder_path = "/"
+    file_type   = "json"
   }
 
   lifecycle {

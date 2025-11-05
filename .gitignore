@@ -1,4 +1,5 @@
 *.DS_Store
 .vscode/
 /orchestration/data/
-.secrets/
+.secrets
+.env
