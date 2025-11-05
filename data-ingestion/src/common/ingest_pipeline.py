@@ -7,7 +7,6 @@ from common.config import BUCKET_NAME, PROJECT_ID, CREDENTIALS_PATH
 Workflow function to extract data from an API and load it into GCS.
 """
 def extract_load(url, params, endpoint_name):
-    os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = CREDENTIALS_PATH
     extractor = APIExtractor(url, params)
     data = extractor.extract()
     if data:
