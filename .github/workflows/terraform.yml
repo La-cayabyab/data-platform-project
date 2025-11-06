@@ -28,8 +28,3 @@ jobs:
       - name: Terraform Validate
         run: terraform validate
         working-directory: ./infrastructure
-
-      - name: Terraform Plan
-        if: github.event_name == 'pull_request'
-        run: terraform plan
-        working-directory: ./infrastructure
