@@ -8,3 +8,4 @@ locals {
   fivetran_api_secret = file("${var.secret_path}/fivetran_api_secret.txt")
   tf_svc_acct_key     = file("${var.secret_path}/svc_acct_key.json")
 }
+
