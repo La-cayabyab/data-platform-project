@@ -1,0 +1,35 @@
+# .github/workflows/terraform.yml
+name: Terraform
+
+on:
+  pull_request:
+    paths:
+      - 'infrastructure/**'
+  push:
+    branches: [main]
+    paths:
+      - 'infrastructure/**'
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: hashicorp/setup-terraform@v2
+
+      - name: Terraform Format
+        run: terraform fmt -check -recursive
+        working-directory: ./infrastructure
+
+      - name: Terraform Init
+        run: terraform init
+        working-directory: ./infrastructure
+
+      - name: Terraform Validate
+        run: terraform validate
+        working-directory: ./infrastructure
+
+      - name: Terraform Plan
+        if: github.event_name == 'pull_request'
+        run: terraform plan
+        working-directory: ./infrastructure
