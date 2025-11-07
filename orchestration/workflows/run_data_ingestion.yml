@@ -11,8 +11,3 @@ tasks:
     type: io.kestra.core.tasks.scripts.Bash
     commands:
       - python3 /app/src/endpoint_extractor/users_extractor.py
-triggers:
-  - id: schedule
-    type: io.kestra.plugin.core.trigger.Schedule
-    cron: "@hourly"
-
