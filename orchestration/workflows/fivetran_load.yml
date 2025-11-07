@@ -1,0 +1,14 @@
+id: fivetran_sync
+namespace: demo
+
+# triggers:
+#   - id: schedule
+#     type: schedule
+#     cron: "@hourly"
+
+tasks:
+  - id: sync
+    type: io.kestra.plugin.fivetran.connectors.Sync
+    apiKey: "{{ readFile(env('SECRET_PATH') + '/fivetran_api_key.txt') }}"
+    apiSecret: "{{ readFile(env('SECRET_PATH') + '/fivetran_api_secret.txt') }}"
+    connectorId: "{{ readFile(env('SECRET_PATH') + '/fivetran_connector_id.txt') }}"
