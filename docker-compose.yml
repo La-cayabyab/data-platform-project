@@ -11,6 +11,7 @@ services:
       - /tmp:/tmp
       - ./orchestration/storage:/app/storage
       - ./orchestration/data:/app/data
+      - ${SECRET_PATH}:/workspace/.secret_keys:ro
       - ./.secrets/dataplatform-lab-internal-v1-tf-service-account.json:/app/secrets/dataplatform-lab-internal-v1-tf-service-account.json
     command: server local
     restart: unless-stopped
