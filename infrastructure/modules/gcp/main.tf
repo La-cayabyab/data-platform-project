@@ -18,29 +18,40 @@ locals {
       display_name = "Fivetran Service Account"
       description  = "Service account for Fivetran"
     }
+    "kestra-service-account" = {
+      display_name = "Kestra Service Account"
+      description  = "Service account for Kestra"
+    }
   }
   role_assignments = {
     "roles/bigquery.user" = [
       google_service_account.service_accounts["dbt-service-account"].email,
-      google_service_account.service_accounts["fivetran-service-account"].email
+      google_service_account.service_accounts["fivetran-service-account"].email,
+      google_service_account.service_accounts["kestra-service-account"].email
     ]
     "roles/bigquery.dataEditor" = [
-      google_service_account.service_accounts["dbt-service-account"].email
+      google_service_account.service_accounts["dbt-service-account"].email,
+      google_service_account.service_accounts["kestra-service-account"].email
     ]
     "roles/bigquery.dataViewer" = [
       google_service_account.service_accounts["dbt-service-account"].email
+    ]
+    "roles/bigquery.admin" = [
+    ]
+    "roles/storage.objectViewer" = [
+      "g-ensign-indispensably@fivetran-production.iam.gserviceaccount.com",
+      google_service_account.service_accounts["kestra-service-account"].email
     ]
     "roles/composer.worker" = [
       google_service_account.service_accounts["composer-tf-service-account"].email
     ]
     "roles/storage.admin" = [
       google_service_account.service_accounts["composer-tf-service-account"].email,
-      google_service_account.service_accounts["fivetran-service-account"].email
+      google_service_account.service_accounts["fivetran-service-account"].email,
+      google_service_account.service_accounts["kestra-service-account"].email
     ]
-    "roles/bigquery.admin" = [
-    ]
-    "roles/storage.objectViewer" = [
-      "g-ensign-indispensably@fivetran-production.iam.gserviceaccount.com"
+    "roles/storage.objectCreator" = [
+      google_service_account.service_accounts["kestra-service-account"].email
     ]
   }
 
