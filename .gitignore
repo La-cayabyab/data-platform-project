@@ -3,6 +3,3 @@
 /orchestration/data/
 .secrets
 .env
-
-# script that cleans up old tfstate backup files
-tfstate_cleanup.sh
