@@ -1,4 +1,4 @@
-id: fivetran_sync
+id: fivetran_load
 namespace: demo
 
 tasks:

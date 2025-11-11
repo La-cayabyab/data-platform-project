@@ -2,19 +2,19 @@ id: data_pipeline
 namespace: demo
 
 triggers:
-  - id: hourly
+  - id: every_3_hours
     type: io.kestra.plugin.core.trigger.Schedule
-    cron: "@hourly"
+    cron: "0 */3 * * *"
 
 tasks:
   - id: ingest_data
-    type: io.kestra.core.tasks.flows.Subflow
+    type: io.kestra.plugin.core.flow.Subflow
     namespace: demo
-    flowId: run_data_ingestion
+    flowId: data_extract
     wait: true
 
   - id: sync_to_bigquery
-    type: io.kestra.core.tasks.flows.Subflow
+    type: io.kestra.plugin.core.flow.Subflow
     namespace: demo
-    flowId: fivetran_sync
+    flowId: fivetran_load
     wait: true

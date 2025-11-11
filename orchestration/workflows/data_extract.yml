@@ -1,10 +1,5 @@
-id: run_data_ingestion
+id: data_extract
 namespace: demo
-
-triggers:
-  - id: hourly
-    type: io.kestra.plugin.core.trigger.Schedule
-    cron: "@hourly"
 
 tasks:
   - id: run_main_py
