@@ -6,10 +6,10 @@ sources:
     schema: raw_gcs
     tables:
       - name: posts
-        description: "Raw posts data ingested from GCS via Fivetran."
+        description: "Raw posts data ingested from GCS via Fivetran. This table contains duplicates because it is pulling from a static API endpoint."
         columns:
           - name: _file
-            description: "The source file name from GCS.  "
+            description: "The source file name from GCS."
           - name: _line
             description: "The number of the record within the source JSON file."
           - name: _modified
