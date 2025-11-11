@@ -11,7 +11,8 @@ resource "fivetran_destination" "bigquery_destination" {
   }
 }
 
-resource "fivetran_connector" "google_cloud_storage" {
+# Connector for posts data
+resource "fivetran_connector" "google_cloud_storage_posts" {
   group_id = fivetran_destination.bigquery_destination.group_id
   service  = "gcs"
 
@@ -21,16 +22,53 @@ resource "fivetran_connector" "google_cloud_storage" {
   }
 
   config {
-    bucket      = var.gcs_bucket
-    folder_path = "/"
-    file_type   = "json"
+    bucket    = var.gcs_bucket
+    file_type = "json"
+
+    files {
+      table_name = "posts"
+    }
+  }
+}
+
+# Connector for comments data
+resource "fivetran_connector" "google_cloud_storage_comments" {
+  group_id = fivetran_destination.bigquery_destination.group_id
+  service  = "gcs"
+
+  destination_schema {
+    name  = "raw_gcs"
+    table = "comments"
   }
 
-  lifecycle {
-    ignore_changes = [
-      config.files,
-      config.folder_path
-    ]
+  config {
+    bucket    = var.gcs_bucket
+    file_type = "json"
+
+    files {
+      table_name = "comments"
+    }
+  }
+}
+
+# Connector for users data
+resource "fivetran_connector" "google_cloud_storage_users" {
+  group_id = fivetran_destination.bigquery_destination.group_id
+  service  = "gcs"
+
+  destination_schema {
+    name  = "raw_gcs"
+    table = "users"
+  }
+  config {
+    bucket    = var.gcs_bucket
+    file_type = "json"
+
+    files {
+      table_name = "users"
+    }
   }
 
 }
+
+

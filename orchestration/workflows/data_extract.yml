@@ -1,13 +1,10 @@
-id: run_data_ingestion
+id: data_extract
 namespace: demo
-
-triggers:
-  - id: schedule
-    type: io.kestra.plugin.core.trigger.Schedule
-    cron: "@hourly"
 
 tasks:
   - id: run_main_py
     type: io.kestra.core.tasks.scripts.Bash
     commands:
       - python3 /app/src/endpoint_extractor/users_extractor.py
+      - python3 /app/src/endpoint_extractor/comments_extractor.py
+      - python3 /app/src/endpoint_extractor/posts_extractor.py
