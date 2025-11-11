@@ -22,15 +22,12 @@ resource "fivetran_connector" "google_cloud_storage_posts" {
   }
 
   config {
-    bucket      = var.gcs_bucket
-    folder_path = "/raw_data/posts"
-    file_type   = "json"
-  }
+    bucket    = var.gcs_bucket
+    file_type = "json"
 
-  lifecycle {
-    ignore_changes = [
-      config
-    ]
+    files {
+      table_name = "posts"
+    }
   }
 }
 
@@ -45,15 +42,12 @@ resource "fivetran_connector" "google_cloud_storage_comments" {
   }
 
   config {
-    bucket      = var.gcs_bucket
-    folder_path = "/raw_data/comments" # Specify comments directory
-    file_type   = "json"
-  }
+    bucket    = var.gcs_bucket
+    file_type = "json"
 
-  lifecycle {
-    ignore_changes = [
-      config
-    ]
+    files {
+      table_name = "comments"
+    }
   }
 }
 
@@ -66,16 +60,15 @@ resource "fivetran_connector" "google_cloud_storage_users" {
     name  = "raw_gcs"
     table = "users"
   }
-
   config {
-    bucket      = var.gcs_bucket
-    folder_path = "/raw_data/users"
-    file_type   = "json"
+    bucket    = var.gcs_bucket
+    file_type = "json"
+
+    files {
+      table_name = "users"
+    }
   }
 
-  lifecycle {
-    ignore_changes = [
-      config
-    ]
-  }
 }
+
+

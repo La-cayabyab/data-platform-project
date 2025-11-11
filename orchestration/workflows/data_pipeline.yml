@@ -1,0 +1,20 @@
+id: data_pipeline
+namespace: demo
+
+triggers:
+  - id: hourly
+    type: io.kestra.plugin.core.trigger.Schedule
+    cron: "@hourly"
+
+tasks:
+  - id: ingest_data
+    type: io.kestra.core.tasks.flows.Subflow
+    namespace: demo
+    flowId: run_data_ingestion
+    wait: true
+
+  - id: sync_to_bigquery
+    type: io.kestra.core.tasks.flows.Subflow
+    namespace: demo
+    flowId: fivetran_sync
+    wait: true
