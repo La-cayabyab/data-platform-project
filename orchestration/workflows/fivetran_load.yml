@@ -4,17 +4,18 @@ namespace: demo
 tasks:
   - id: sync
     type: io.kestra.core.tasks.scripts.Bash
+    runner: PROCESS
     commands:
       - |
         API_KEY=$(cat /workspace/.secret_keys/fivetran_api_key.txt)
         API_SECRET=$(cat /workspace/.secret_keys/fivetran_api_secret.txt)
-        AUTH=$(echo -n "${API_KEY}:${API_SECRET}" | base64)
+        AUTH=$(echo -n "$API_KEY:$API_SECRET" | base64)
         
-        CONNECTORS=("posts" "comments" "users")
-        FAILED=()
+        CONNECTORS="posts comments users"
+        FAILED=""
         
-        for NAME in "${CONNECTORS[@]}"; do
-          CONNECTOR_ID=$(cat /workspace/.secret_keys/fivetran_connector_${NAME}_id.txt 2>/dev/null | xargs)
+        for NAME in $CONNECTORS; do
+          CONNECTOR_ID=$(cat /workspace/.secret_keys/fivetran_connector_"$NAME"_id.txt 2>/dev/null | xargs)
           
           if [ -z "$CONNECTOR_ID" ]; then
             echo "⚠️  Skipping $NAME: file not found"
@@ -25,15 +26,15 @@ tasks:
           
           HTTP_CODE=$(curl -s -w "%{http_code}" -o /dev/null -X POST \
             -H "Authorization: Basic $AUTH" \
-            "https://api.fivetran.com/v1/connectors/${CONNECTOR_ID}/force")
+            "https://api.fivetran.com/v1/connectors/$CONNECTOR_ID/force")
           
           if [ "$HTTP_CODE" = "200" ] || [ "$HTTP_CODE" = "201" ]; then
             echo "✅ $NAME synced"
           else
             echo "❌ $NAME failed (HTTP $HTTP_CODE)"
-            FAILED+=("$NAME")
+            FAILED="$FAILED $NAME"
           fi
         done
         
         echo ""
-        [ ${#FAILED[@]} -eq 0 ] && echo "✅ All syncs completed" || (echo "❌ Failed: ${FAILED[*]}" && exit 1)
+        [ -z "$FAILED" ] && echo "✅ All syncs completed" || (echo "❌ Failed:$FAILED" && exit 1)
