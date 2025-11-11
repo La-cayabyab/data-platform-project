@@ -6,30 +6,34 @@ tasks:
     type: io.kestra.core.tasks.scripts.Bash
     commands:
       - |
-        echo "Starting Fivetran sync process..."
-        # Read credentials from mounted secret files
         API_KEY=$(cat /workspace/.secret_keys/fivetran_api_key.txt)
         API_SECRET=$(cat /workspace/.secret_keys/fivetran_api_secret.txt)
-        CONNECTOR_ID=$(cat /workspace/.secret_keys/fivetran_connector_id.txt)
-        
-        # Construct auth string and encode
         AUTH=$(echo -n "${API_KEY}:${API_SECRET}" | base64)
-
-        echo "Triggering manual sync..."
-        RESPONSE=$(curl -s -w "\n%{http_code}" -X POST -H "Authorization: Basic $AUTH" "https://api.fivetran.com/v1/connectors/${CONNECTOR_ID}/force")
-        HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
-        BODY=$(echo "$RESPONSE" | head -n1)
-        echo "Sync trigger response: $BODY"
-        echo "HTTP status code: $HTTP_CODE"
         
-        if [ "$HTTP_CODE" != "200" ] && [ "$HTTP_CODE" != "201" ]; then
-          echo "Error: Failed to trigger sync"
-          exit 1
-        fi
+        CONNECTORS=("posts" "comments" "users")
+        FAILED=()
         
-        # Verify the sync was triggered
-        echo "Verifying sync status..."
-        STATUS_RESPONSE=$(curl -s -H "Authorization: Basic $AUTH" "https://api.fivetran.com/v1/connectors/${CONNECTOR_ID}")
-        echo "Connector status: $STATUS_RESPONSE"
+        for NAME in "${CONNECTORS[@]}"; do
+          CONNECTOR_ID=$(cat /workspace/.secret_keys/fivetran_connector_${NAME}_id.txt 2>/dev/null | xargs)
+          
+          if [ -z "$CONNECTOR_ID" ]; then
+            echo "⚠️  Skipping $NAME: file not found"
+            continue
+          fi
+          
+          echo "🔄 Syncing $NAME ($CONNECTOR_ID)..."
+          
+          HTTP_CODE=$(curl -s -w "%{http_code}" -o /dev/null -X POST \
+            -H "Authorization: Basic $AUTH" \
+            "https://api.fivetran.com/v1/connectors/${CONNECTOR_ID}/force")
+          
+          if [ "$HTTP_CODE" = "200" ] || [ "$HTTP_CODE" = "201" ]; then
+            echo "✅ $NAME synced"
+          else
+            echo "❌ $NAME failed (HTTP $HTTP_CODE)"
+            FAILED+=("$NAME")
+          fi
+        done
         
-        echo "Sync triggered successfully"
+        echo ""
+        [ ${#FAILED[@]} -eq 0 ] && echo "✅ All syncs completed" || (echo "❌ Failed: ${FAILED[*]}" && exit 1)
