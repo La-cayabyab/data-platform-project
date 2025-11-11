@@ -2,7 +2,7 @@ id: run_data_ingestion
 namespace: demo
 
 triggers:
-  - id: schedule
+  - id: hourly
     type: io.kestra.plugin.core.trigger.Schedule
     cron: "@hourly"
 
@@ -11,3 +11,5 @@ tasks:
     type: io.kestra.core.tasks.scripts.Bash
     commands:
       - python3 /app/src/endpoint_extractor/users_extractor.py
+      - python3 /app/src/endpoint_extractor/comments_extractor.py
+      - python3 /app/src/endpoint_extractor/posts_extractor.py
