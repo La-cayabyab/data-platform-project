@@ -1,0 +1,14 @@
+version: 2
+
+sources: 
+  - name: google_cloud_storage
+    database: dataplatform-lab-internal-v1
+    schema: raw_gcs
+    tables:
+      - name: posts
+        columns:
+          - name: _file
+          - name: _line
+          - name: _modified
+          - name: _fivetran_synced
+          - name: _data
