@@ -23,3 +23,6 @@ models:
     base:
       +schema: base
       +materialized: table
+    staging:
+      +schema: staging
+      +materialized: table

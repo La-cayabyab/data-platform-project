@@ -1,0 +1,19 @@
+version: 2
+
+models:
+  - name: stg__posts
+    description: "Staging model for posts data."
+    columns:
+      - name: post_id
+        description: "Primary key for the post."
+        tests:
+          - not_null
+          - unique
+      - name: post_content
+        description: "Content of the post."
+        tests:
+          - not_null
+      - name: post_modified_datetime_utc
+        description: "Timestamp when the post was last modified (UTC)."
+      - name: fivetran_synced_datetime_utc
+        description: "Timestamp when the post was last synced by Fivetran (UTC)."
