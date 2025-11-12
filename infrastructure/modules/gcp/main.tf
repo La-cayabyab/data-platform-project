@@ -94,11 +94,6 @@ resource "google_service_account_key" "fivetran_key" {
   service_account_id = google_service_account.service_accounts["fivetran-service-account"].name
 }
 
-# output "fivetran_service_account_key" {
-#   value     = google_service_account_key.fivetran_key.private_key
-#   sensitive = true
-# }
-
 # ----------- APPS/STORAGE RESOURCES -----------
 
 resource "google_storage_bucket" "test_gcp_bucket" {
