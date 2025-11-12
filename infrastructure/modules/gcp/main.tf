@@ -19,7 +19,7 @@ locals {
       display_name = "Kestra Service Account"
       description  = "Service account for Kestra"
     }
-     "composer-tf-service-account" = {
+    "composer-tf-service-account" = {
       count        = 0
       display_name = "Composer Terraform Service Account"
       description  = "Service account for Cloud Composer environment"
