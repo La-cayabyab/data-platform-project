@@ -2,10 +2,6 @@
 
 locals {
   service_accounts = {
-    "composer-tf-service-account" = {
-      display_name = "Composer Terraform Service Account"
-      description  = "Service account for Cloud Composer environment"
-    }
     "bqowner" = {
       display_name = "BigQuery Owner Service Account"
       description  = "Service account for BigQuery ownership"
@@ -19,39 +15,33 @@ locals {
       description  = "Service account for Fivetran"
     }
     "kestra-service-account" = {
+      count        = 0
       display_name = "Kestra Service Account"
       description  = "Service account for Kestra"
+    }
+     "composer-tf-service-account" = {
+      count        = 0
+      display_name = "Composer Terraform Service Account"
+      description  = "Service account for Cloud Composer environment"
     }
   }
   role_assignments = {
     "roles/bigquery.user" = [
       google_service_account.service_accounts["dbt-service-account"].email,
-      google_service_account.service_accounts["fivetran-service-account"].email,
-      google_service_account.service_accounts["kestra-service-account"].email
+      google_service_account.service_accounts["fivetran-service-account"].email
     ]
     "roles/bigquery.dataEditor" = [
-      google_service_account.service_accounts["dbt-service-account"].email,
-      google_service_account.service_accounts["kestra-service-account"].email
-    ]
-    "roles/bigquery.dataViewer" = [
       google_service_account.service_accounts["dbt-service-account"].email
     ]
-    "roles/bigquery.admin" = [
-    ]
     "roles/storage.objectViewer" = [
-      "g-ensign-indispensably@fivetran-production.iam.gserviceaccount.com",
-      google_service_account.service_accounts["kestra-service-account"].email
+      "g-ensign-indispensably@fivetran-production.iam.gserviceaccount.com"
     ]
     "roles/composer.worker" = [
-      google_service_account.service_accounts["composer-tf-service-account"].email
+      # google_service_account.service_accounts["composer-tf-service-account"].email
     ]
     "roles/storage.admin" = [
-      google_service_account.service_accounts["composer-tf-service-account"].email,
-      google_service_account.service_accounts["fivetran-service-account"].email,
-      google_service_account.service_accounts["kestra-service-account"].email
-    ]
-    "roles/storage.objectCreator" = [
-      google_service_account.service_accounts["kestra-service-account"].email
+      # google_service_account.service_accounts["composer-tf-service-account"].email,
+      google_service_account.service_accounts["fivetran-service-account"].email
     ]
   }
 
