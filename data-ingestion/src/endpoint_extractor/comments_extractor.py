@@ -8,12 +8,14 @@ from common.ingest_pipeline import extract_load
 """
 Extracts data from the comments API endpoint and uploads it to GCS to then be loaded to BigQuery.
 """
-logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s %(message)s')
 
-if __name__ == "__main__":
+def extract_comments():
     try:
         url = 'https://jsonplaceholder.typicode.com/comments'
         params = {'format': 'json'}
         extract_load(url, params, 'comments', )
     except Exception as e:
-        logging.critical(f"Undefined error occurred: {e}")
+        logging.exception(f"Undefined error occurred: {e}")
+
+# if __name__ == "__main__":
+#     extract_comments()
