@@ -18,3 +18,31 @@ sources:
             description: "The timestamp when Fivetran synced the data."
           - name: _data
             description: "The JSON data payload from the source file."
+
+      - name: comments
+        description: "Raw comments data ingested from GCS via Fivetran."
+        columns:
+          - name: _file
+            description: "The source file name from GCS."
+          - name: _line
+            description: "The number of the record within the source JSON file."
+          - name: _modified
+            description: "The last modified timestamp of the source file."
+          - name: _fivetran_synced
+            description: "The timestamp when Fivetran synced the data."
+          - name: _data
+            description: "The JSON data payload from the source file."
+
+      - name: users
+        description: "Raw users data ingested from GCS via Fivetran."
+        columns:
+          - name: _file
+            description: "The source file name from GCS."
+          - name: _line
+            description: "The number of the record within the source JSON file."
+          - name: _modified
+            description: "The last modified timestamp of the source file."
+          - name: _fivetran_synced
+            description: "The timestamp when Fivetran synced the data."
+          - name: _data
+            description: "The JSON data payload from the source file."

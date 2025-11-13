@@ -1,0 +1,14 @@
+version: 2
+
+models:
+  - name: stg__users
+    columns:
+      - name: user_id
+        tests:
+          - not_null
+          - unique
+      - name: username
+      - name: user_email_address
+      - name: user_full_name
+      - name: user_company_address
+      - name: user_modified_datetime_utc
