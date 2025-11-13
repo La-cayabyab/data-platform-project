@@ -31,8 +31,8 @@ Terraform <> Fivetran - The building of resources was straightforward. However t
 
 ### Environment Variables
 
-| Name                           | Description|
-|------------                    |------------|
+| Name                           | Description                                                 |
+|--------------------------------|-------------------------------------------------------------|
 | terraform-service-account      | `Private key` - Used for spinning up GCP/Fivetran resources |
 | fivetran_api_key               | Used to deploy Fivetran resources and trigger syncs         |
 | fivetran_api_secret            | Used to deploy Fivetran resources and trigger syncs         | 
