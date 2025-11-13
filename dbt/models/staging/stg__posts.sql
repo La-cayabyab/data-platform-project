@@ -2,6 +2,7 @@ WITH posts AS (SELECT * FROM {{ ref('base__posts')}})
 
 SELECT
     post_id
+    , user_id
     , post_content
     , post_modified_datetime_utc
     , fivetran_synced_datetime_utc
