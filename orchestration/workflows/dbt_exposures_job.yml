@@ -1,0 +1,18 @@
+
+id: dbt_exposures_job
+namespace: demo
+description: "Trigger dbt Cloud job via Kestra"
+variables:
+  account_id: "{{ secret('dbt_cloud_account_id') }}"
+  job_id: "{{ secret('dbt_cloud_job_id') }}"
+  dbt_cloud_api_token: "{{ secret('dbt_cloud_api_token') }}"
+tasks:
+  - id: trigger-dbt-cloud-job
+    type: io.kestra.plugin.core.http.Request
+    url: "https://cloud.getdbt.com/api/v2/accounts/{{vars.account_id}}/jobs/{{vars.job_id}}/run/"
+    method: POST
+    headers:
+      Authorization: "Token {{vars.dbt_cloud_api_token}}"
+      Content-Type: "application/json"
+    body: |
+      {}
