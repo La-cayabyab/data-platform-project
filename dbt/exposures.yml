@@ -1,0 +1,11 @@
+exposures:
+  - name: data_viz
+    description: Exposure of customer ready data models
+    owner: analytics_team
+    type: dashboard
+    tags:
+      - product
+      - users
+    depends_on:
+      - ref('users')
+
