@@ -4,8 +4,7 @@ exposures:
     owner: analytics_team
     type: dashboard
     tags:
-      - product
-      - users
+      - daily
     depends_on:
       - ref('users')
 
