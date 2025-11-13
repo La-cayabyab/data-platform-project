@@ -7,14 +7,20 @@ triggers:
     cron: "0 */3 * * *"
 
 tasks:
-  - id: ingest_data
+  - id: extract_and_load_to_gcs
     type: io.kestra.plugin.core.flow.Subflow
     namespace: demo
     flowId: data_extract
     wait: true
 
-  - id: sync_to_bigquery
+  - id: sync_gcs_to_bigquery
     type: io.kestra.plugin.core.flow.Subflow
     namespace: demo
     flowId: fivetran_load
+    wait: true
+
+  - id: transform_data_dbt_bq
+    type: io.kestra.plugin.core.flow.Subflow
+    namespace: demo
+    flowId: dbt_exposures_job
     wait: true
