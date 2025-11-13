@@ -34,6 +34,7 @@ Terraform <> Fivetran - The building of resources was straightforward. However t
 | Name                           | Description                                                 |
 |--------------------------------|-------------------------------------------------------------|
 | terraform-service-account      | `Private key` - Used for spinning up GCP/Fivetran resources |
+| dbt-service-account            | `Private key` - Used for connecting dbt env to BQ (DWH)     |
 | fivetran_api_key               | Used to deploy Fivetran resources and trigger syncs         |
 | fivetran_api_secret            | Used to deploy Fivetran resources and trigger syncs         | 
 | fivetran_connector_id (s)      | Used to trigger syncs                                       | 
