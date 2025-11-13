@@ -19,4 +19,3 @@ SELECT
         ,JSON_EXTRACT_SCALAR(_data, '$.address.zipcode')
     )                                                        AS user_company_address
 FROM users
-
