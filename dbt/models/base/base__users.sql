@@ -6,7 +6,9 @@ SELECT
     , CAST(_fivetran_synced AS TIMESTAMP)                     AS fivetran_synced_datetime_utc
 
     -- user/company metadata
-    , LOWER(JSON_EXTRACT_SCALAR(_data, '$.id'))               AS user_id
+    , CAST(
+        JSON_EXTRACT_SCALAR(_data, '$.id')
+        AS INT64)                                             AS user_id
     {# , CAST(_line AS INT64)                                 AS user_id #} -- initialized at 0 so parsed id from user metadata
     , LOWER(JSON_EXTRACT_SCALAR(_data, '$.username'))         AS username
     , LOWER(JSON_EXTRACT_SCALAR(_data, '$.email'))            AS user_email_address

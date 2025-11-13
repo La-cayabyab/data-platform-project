@@ -10,4 +10,4 @@ SELECT
 
 FROM users
     LEFT JOIN posts 
-        USING (user_id)
+        ON users.user_id = posts.user_id
