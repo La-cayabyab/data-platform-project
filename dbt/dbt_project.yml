@@ -20,15 +20,15 @@ clean-targets:         # directories to be removed by `dbt clean`
 
 models:
   dbt_external_demo:
-    base:
+    base: # used as replication layer. minimal data transformation
       +schema: base
       +materialized: table
-    staging:
+    staging: # used for cleaning and preparing raw data to be reusable components for analytics use
       +schema: staging
       +materialized: table
-    intermediate:
+    intermediate: # used for intermediate transformations e.g. aggregations or joins that are reusable prior to exposure layer
       +schema: intermediate
       +materialized: view
-    exposure:
+    exposure: # used for exposing data to end users or external systems
       +schema: exposure
       +materialized: table
