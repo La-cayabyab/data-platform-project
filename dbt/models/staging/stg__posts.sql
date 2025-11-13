@@ -9,5 +9,8 @@ SELECT
 FROM posts
 
 QUALIFY ROW_NUMBER() OVER (
-    PARTITION BY post_id ORDER BY fivetran_synced_datetime_utc DESC
+    PARTITION BY post_id 
+    ORDER BY 
+        fivetran_synced_datetime_utc DESC
+        , post_modified_datetime_utc DESC
     ) = 1
